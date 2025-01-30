@@ -17,7 +17,7 @@ CREATE TABLE `Menu` (
     `price` INTEGER NOT NULL DEFAULT 0,
     `category` ENUM('FOOD', 'DRINK', 'SNACK') NOT NULL DEFAULT 'FOOD',
     `picture` VARCHAR(191) NOT NULL DEFAULT '',
-    `description` TEXT NOT NULL DEFAULT '',
+    `description` TEXT NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -47,7 +47,7 @@ CREATE TABLE `OrderList` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `uuid` VARCHAR(191) NOT NULL DEFAULT '',
     `quantity` INTEGER NOT NULL DEFAULT 0,
-    `note` TEXT NOT NULL DEFAULT '',
+    `note` TEXT NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `menuId` INTEGER NULL,
