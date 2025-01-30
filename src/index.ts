@@ -9,9 +9,9 @@ import UserRoute from './routers/userRoute'
 import OrderRoute from './routers/orderRoute'
 import ReportRoute from './routers/reportRoute'
 
-import { PORT } from './global'
-
 const app = express()
+const PORT = process.env.PORT || 3000; // Define the port
+
 app.use(cors())
 app.use(express.json())
 

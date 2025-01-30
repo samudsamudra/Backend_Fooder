@@ -227,40 +227,42 @@ export const deleteUser = async (request: Request, response: Response) => {
 
 export const authentication = async (request: Request, response: Response) => {
     try {
-        const { email, password } = request.body /** get requested data (data has been sent from request) */
+        const { email, password } = request.body; // get requested data (data has been sent from request)
 
-        /** find a valid admin based on username and password */
+        // find a valid user based on email and plain text password
         const findUser = await prisma.user.findFirst({
-            where: { email, password: md5(password) }
-        })
+            where: { email, password }
+        });
 
-        /** check is admin exists */
-        if (!findUser) return response
-            .status(200)
-            .json({ status: false, logged: false, message: `Email or password is invalid` })
+        // check if user exists
+        if (!findUser) {
+            return response
+                .status(200)
+                .json({ status: false, logged: false, message: `Email or password is invalid` });
+        }
 
         let data = {
             id: findUser.id,
             name: findUser.name,
             email: findUser.email,
             role: findUser.role
-        }
+        };
 
-        /** define payload to generate token */
-        let payload = JSON.stringify(data)
+        // define payload to generate token
+        let payload = JSON.stringify(data);
 
-        /** generate token */
-        let token = sign(payload, SECRET || "joss")
+        // generate token
+        let token = sign(payload, SECRET || "joss");
 
         return response
             .status(200)
-            .json({ status: true, logged: true, data: data, message: `Login Success`, token })
+            .json({ status: true, logged: true, data: data, message: `Login Success`, token });
     } catch (error) {
         return response
             .json({
                 status: false,
                 message: `There is an error. ${error}`
             })
-            .status(400)
+            .status(400);
     }
-}
+};
